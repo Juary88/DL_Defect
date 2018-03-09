@@ -33,7 +33,7 @@ def image_morphology(thresh):
 	return closed
 
 def findcnts_and_box_point(closed):
-	# 这里opencv3返回的是三个参数
+	# 杩欓噷opencv3杩斿洖鐨勬槸涓変釜鍙傛暟
 	(_, cnts, _) = cv2.findContours(closed.copy(), 
 		cv2.RETR_CCOMP, 
 		cv2.CHAIN_APPROX_SIMPLE)
@@ -45,7 +45,7 @@ def findcnts_and_box_point(closed):
 	return box
 
 def drawcnts_and_cut(original_img, box):
-	# 因为这个函数有极强的破坏性，所有需要在img.copy()上画
+	# 鍥犱负杩欎釜鍑芥暟鏈夋瀬寮虹殑鐮村潖鎬э紝鎵�鏈夐渶瑕佸湪img.copy()涓婄敾
 	# draw a bounding box arounded the detected barcode and display the image
 	draw_img = cv2.drawContours(original_img.copy(), [box], -1, (0, 0, 255), 3)
 
@@ -69,11 +69,10 @@ def walk():
 	blurred = Gaussian_Blur(gray)
 	gradX, gradY, gradient = Sobel_gradient(blurred)
 	thresh = Thresh_and_blur(gradient)
-	closed = image_morphology(thresh)
 	box = findcnts_and_box_point(thresh)
 	draw_img, crop_img = drawcnts_and_cut(original_img,box)
 
-	# 暴力一点，把它们都显示出来看看
+	# 鏆村姏涓�鐐癸紝鎶婂畠浠兘鏄剧ず鍑烘潵鐪嬬湅
 
 	#cv2.imshow('original_img', original_img)
 	#cv2.imshow('blurred', blurred)
